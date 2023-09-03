@@ -1,36 +1,39 @@
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ChromePicker } from "react-color";
+import { InputContext } from "../App";
 
+const InputColor = () => {
+  const [color, setColor] = useState('#054080');
+  const [displayColorPicker, setDisplayColorPicker] = useState(false);
+  // context
+  const { inputValue, setInputValue } = useContext(InputContext);
+  useEffect(() => {
+    setInputValue({ ...inputValue, color: color });
+  }, [color]);
 
-// eslint-disable-next-line 
- const InputColor = () => {
-    const [color,setColor] = useState('#054080')
-    const [displaycolorPicker, setDisplaycolorPicker] = useState(false);
+  const handleChange = color => setColor(color.hex);
 
-    const handleChange = color =>setColor(color.hex);
-       return (
-     <div>
-       <label
-       className="font-semibold text-md"
-       >Color</label>
-       <div className="flex itemscenter gap-2">
-       
-            <div 
-            onClick={() => setDisplaycolorPicker(!displaycolorPicker)}
-             style  ={{background: color }}
-            className="w-10 h-8 cursor-pointer border-4"></div>
-            <span>{color}</span>
-       </div>
-       {
-        displaycolorPicker && (
-            <div className="absolute mt-2">
-                <ChromePicker color={color} onChange={handleChange} />
-            </div>
+  return (
+    <div>
+      <label
+        className="font-semibold text-md"
+      >Color</label>
+      <div className="flex items-center gap-2">
+        <div
+          onClick={() => setDisplayColorPicker(!displayColorPicker)}
+          style={{ background: color }}
+          className="w-10 h-8 cursor-pointer border-4"></div>
+        <span>{color}</span>
+      </div>
+      {
+        displayColorPicker && (
+          <div className="absolute mt-2">
+            <ChromePicker color={color} onChange={handleChange} />
+          </div>
         )
-       }
-     </div>
-   )
- }
- 
- export default InputColor
- 
+      }
+    </div>
+  )
+}
+
+export default InputColor
