@@ -9,7 +9,6 @@ const InputColor = () => {
   const { inputValue, setInputValue } = useContext(InputContext);
   useEffect(() => {
     setInputValue({ ...inputValue, color: color });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [color]);
 
   const handleChange = color => setColor(color.hex);
